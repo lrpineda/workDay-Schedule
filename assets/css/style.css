@@ -25,6 +25,7 @@ textarea{
   white-space: pre-wrap;
   border-left: 1px solid black;
   text-align: left;
+  
 }
 
 .time-block{
@@ -32,9 +33,11 @@ textarea{
   border-radius: 15px;
 }
 
+
 .row {
   white-space: pre-wrap;
   border-top: 1px solid white;;
+  height: 80px;
 }
 
 .hour {
