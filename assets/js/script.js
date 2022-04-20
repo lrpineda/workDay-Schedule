@@ -3,6 +3,36 @@ var items = {};
 var todaysDate = moment().format("dddd, MMMM Do");
 $("#currentDay").text(todaysDate);
 
+var setItems = function () {
+    $.each(items, function(key, value) {
+        var hour = key;
+        var text = value;
+        var hourEl = $(".time-block").find(".hour").filter(function() {
+            return $(this).text() === hour;
+        });
+        var itemDesc = hourEl.siblings(".description");
+        itemDesc.text(text);
+    });
+};
+
+var loadItems = function () {
+    // Load items from local storage
+    items = JSON.parse(localStorage.getItem("items"));
+    if(!items) {
+        items = {};
+    };
+
+    $.each(items, function(key, value) {
+        var hour = key;
+        var text = value;
+        
+    });
+
+    setItems();
+};
+
+
+
 // Setting up the hourly agenda
 var hours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
 var currentHour = moment().format("hA");
@@ -40,7 +70,6 @@ var createAgenda = function () {
 createAgenda();
 
 
-
 $(".description").on("click",  function () {
     var text = $(this).text().trim();
     var classes = $(this).attr("class");
@@ -53,14 +82,9 @@ $(".description").on("click",  function () {
     textInput.trigger("focus");
     console.log("this happened");
    
+    
 });
 
-$("#description-input").on("blur", "textarea", function () {
-    var classes = $(this).attr("class");
-    var text = $(this).val().trim();
-    var index = $(this).closest(".time-block").index();
-    console.log("Here's the data", index,text, classes);
-});
 
 
 var saveItems = function () {
@@ -70,6 +94,10 @@ var saveItems = function () {
 $(".fa-save").on("click", function () {
     var item = $(this).closest("li").find(".description").val();
     var time = $(this).closest("li").find(".hour").text();
-    console.log("save button clicked", item, time);
-
+    var index = $(this).closest(".time-block").index();
+    console.log("save button clicked", item, time, index);
+    items[time] = item;
+    saveItems();
 });
+
+loadItems();

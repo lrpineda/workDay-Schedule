@@ -25,6 +25,7 @@ textarea{
   white-space: pre-wrap;
   border-left: 1px solid black;
   text-align: left;
+  padding: 10px;
   
 }
 
